@@ -1,0 +1,67 @@
+// ImageTypes
+(FixedInternalImagePixelType "float")
+(MovingInternalImagePixelType "float")
+
+// Transform
+(Transform "BSplineTransform")
+(BSplineTransformSplineOrder 2)
+
+(HowToCombineTransforms "Compose")
+(AutomaticTransformInitialization "true")
+(AutomaticScalesEstimation "true")
+
+// Components
+(Registration "MultiResolutionRegistration")
+(FixedImagePyramid "FixedRecursiveImagePyramid")
+(MovingImagePyramid "MovingRecursiveImagePyramid")
+
+// Sampler
+// Number of spatial samples used to compute the mutual information in each resolution level:
+(ImageSampler "RandomCoordinate")
+(FixedImageBSplineInterpolationOrder 1)
+(UseRandomSampleRegion "false")
+(NumberOfSpatialSamples 2048)
+(NewSamplesEveryIteration "true")
+(CheckNumberOfSamples "true")
+(MaximumNumberOfSamplingAttempts 10)
+
+// Interpolator
+(Interpolator "BSplineInterpolator")
+// Order of B-Spline interpolation used in each resolution level:
+(BSplineInterpolationOrder 1)
+// Order of B-Spline interpolation used for applying the final deformation:
+(FinalBSplineInterpolationOrder 1)
+
+// Resampler
+//(ResampleInterpolator "FinalNearestNeighborInterpolator")
+(ResampleInterpolator "FinalBSplineInterpolatorFloat")
+(Resampler "DefaultResampler")
+
+// Optimization
+(Metric "AdvancedMattesMutualInformation")
+
+(NumberOfResolutions 3)
+
+// Maximum number of iterations in each resolution level:
+//(MaximumNumberOfIterations 4000)
+(MaximumNumberOfIterations 2000)
+
+(Optimizer "AdaptiveStochasticGradientDescent")
+//SP: Param_a in each resolution level. a_k = a/(A+k+1)^alpha
+//(SP_a 0.125)
+//SP: Param_A in each resolution level. a_k = a/(A+k+1)^alpha
+(SP_A 50.0)
+//SP: Param_alpha in each resolution level. a_k = a/(A+k+1)^alpha
+(SP_alpha 0.6)
+
+// Output
+(WriteTransformParametersEachIteration "false")
+(WriteResultImage "false")
+(WriteResultImageAfterEachResolution "false")
+(CompressResultImage "true")
+(ResultImagePixelType "short")
+(ResultImageFormat "nii")
+(ShowExactMetricValue "false")
+
+//Default pixel value for pixels that come from outside the picture:
+(DefaultPixelValue 0)
